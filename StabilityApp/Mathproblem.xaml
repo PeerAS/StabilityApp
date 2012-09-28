@@ -27,7 +27,13 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0"></Grid>
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <TextBlock Height="114" HorizontalAlignment="Center" Name="MathInfo" Text="Solve the following math problem:" VerticalAlignment="Top" Width="378" TextWrapping="Wrap" FontWeight="Bold" TextAlignment="Center" FontSize="40" />
+            <TextBlock Height="84" HorizontalAlignment="Left" Margin="0,173,0,0" x:Name="MathProblem" Text="" VerticalAlignment="Top" Width="450" FontSize="40" FontWeight="Bold" TextAlignment="Center" />
+            <TextBlock Height="67" HorizontalAlignment="Left" Margin="202,275,0,0" Name="textBlock1" Text="=" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="30" />
+            <TextBox Height="72" HorizontalAlignment="Left" Margin="78,348,0,0" x:Name="Solution" Text="" VerticalAlignment="Top" Width="287" />
+            <Button Content="Submit" Height="72" HorizontalAlignment="Left" Margin="138,476,0,0" x:Name="submit_Button" VerticalAlignment="Top" Width="160" Click="submit_Button_Click" />
+        </Grid>
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->

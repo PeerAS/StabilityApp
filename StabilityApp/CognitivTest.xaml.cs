@@ -22,18 +22,19 @@ namespace StabilityApp
         int[] user_input;
         string time_stamp;
         int current_input = 0;
+        private Random rand;
         private const int MAX_INPUT = 4;
         
-            
         public CognitivTest()
         {
             
             combination = new int[4];
             user_input = new int[4];
+            rand = new Random();
 
             for (int i = 0; i < MAX_INPUT; i++)
             {
-                combination[i] = 0;
+                combination[i] = rand.Next(4) ;
             }
 
                 InitializeComponent();
@@ -46,7 +47,7 @@ namespace StabilityApp
            
             if(current_input <= MAX_INPUT)
             { 
-                user_input[current_input] = 1;
+                user_input[current_input] = 0;
                 current_input++;
                 display_result();
             }
@@ -56,8 +57,9 @@ namespace StabilityApp
         {
             if (current_input <= MAX_INPUT)
             {
-                user_input[current_input] = 2;
+                user_input[current_input] = 1;
                 current_input++;
+                display_result();
             }
         }
 
@@ -65,8 +67,9 @@ namespace StabilityApp
         {
             if (current_input <= MAX_INPUT)
             {
-                user_input[current_input] = 3;
+                user_input[current_input] = 2;
                 current_input++;
+                display_result();
             }
         }
 
@@ -74,8 +77,9 @@ namespace StabilityApp
         {
             if (current_input <= MAX_INPUT)
             {
-                user_input[current_input] = 4;
+                user_input[current_input] = 3;
                 current_input++;
+                display_result();
             }
 
         }
@@ -84,12 +88,30 @@ namespace StabilityApp
 
         void display_result()
         {
+            //will move alot of this to the a result page
             DateTime time_end = DateTime.Now;
             TimeSpan difference = time_end.Subtract(timer);
             time_stamp = difference.ToString();
+            bool combination_error = true;
             if (current_input == 4)
             {
-                MessageBox.Show("Array full. The timer is " + time_stamp);
+                for (int i = 0; i < MAX_INPUT; i++)
+                {
+                    if (user_input[i] != combination[i])
+                    {
+                        combination_error = false;
+                        break;
+                    }
+                }
+
+                if (combination_error)
+                {
+                    MessageBox.Show("Correct combination The timer is " + time_stamp);
+                }
+                else
+                {
+                    MessageBox.Show("Wrong combination");
+                }
             }
         }
 

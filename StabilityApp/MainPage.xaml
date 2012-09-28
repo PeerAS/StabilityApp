@@ -29,6 +29,7 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <Button Content="Cognitiv Test" Height="72" HorizontalAlignment="Center" Name="continue" VerticalAlignment="Top" Width="270" Click="continue_Click" Margin="94,209,92,0" />
+            <Button Content="Math Test" Height="72" HorizontalAlignment="Left" Margin="94,94,0,0" Name="math_Test" VerticalAlignment="Top" Width="270" Click="math_Test_Click" />
         </Grid>
     </Grid>
  

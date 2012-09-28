@@ -25,5 +25,10 @@ namespace StabilityApp
         {
             this.NavigationService.Navigate(new Uri("/CognitivTest.xaml", UriKind.Relative));
         }
+
+        private void math_Test_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/Mathproblem.xaml", UriKind.Relative));
+        }
     }
 }
