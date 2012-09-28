@@ -1,0 +1,11 @@
+﻿//Problem areas
+Timer for cognitiv and math test
+The implementation of blinking or highlighting buttons in the CognitivTest.xaml
+Callback functions for when the array is full
+
+
+
+//Required in the assignment
+Sensor use, moving the the phone for stability
+
+//Questions

@@ -10,15 +10,20 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using System.Windows.Threading;
 
 namespace StabilityApp
 {
     public partial class CognitivTest : PhoneApplicationPage
-    {       
+    {
+        DateTime timer = DateTime.Now;
+
         int[] combination;
         int[] user_input;
+        string time_stamp;
         int current_input = 0;
-        const int MAX_INPUT = 4;
+        private const int MAX_INPUT = 4;
+        
             
         public CognitivTest()
         {
@@ -34,8 +39,11 @@ namespace StabilityApp
                 InitializeComponent();
         }
 
+        #region Button Click
+        
         private void Up_Button_Click(object sender, RoutedEventArgs e)
         {
+           
             if(current_input <= MAX_INPUT)
             { 
                 user_input[current_input] = 1;
@@ -44,12 +52,51 @@ namespace StabilityApp
             }
         }
 
-        void display_result()
+        private void Down_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (current_input == 4)
+            if (current_input <= MAX_INPUT)
             {
-                MessageBox.Show("Array full");
+                user_input[current_input] = 2;
+                current_input++;
             }
         }
+
+        private void Left_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (current_input <= MAX_INPUT)
+            {
+                user_input[current_input] = 3;
+                current_input++;
+            }
+        }
+
+        private void Right_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (current_input <= MAX_INPUT)
+            {
+                user_input[current_input] = 4;
+                current_input++;
+            }
+
+        }
+
+        #endregion
+
+        void display_result()
+        {
+            DateTime time_end = DateTime.Now;
+            TimeSpan difference = time_end.Subtract(timer);
+            time_stamp = difference.ToString();
+            if (current_input == 4)
+            {
+                MessageBox.Show("Array full. The timer is " + time_stamp);
+            }
+        }
+
+        
+
+        
+
+        
     }
 }
