@@ -16,21 +16,22 @@ namespace StabilityApp
 {
     public partial class CognitivTest : PhoneApplicationPage
     {
-        DateTime timer = DateTime.Now;
-
-        int[] combination;
-        int[] user_input;
-        string time_stamp;
-        int current_input = 0;
-        private Random rand;
+        private int[] combination;
+        private int[] user_input;
+        private string time_stamp;
+        private int _current_input = 0;
         private const int MAX_INPUT = 4;
-        
+
+        private Random rand;
+        DateTime timer;
+
         public CognitivTest()
         {
             
             combination = new int[4];
             user_input = new int[4];
             rand = new Random();
+            timer = DateTime.Now;
 
             for (int i = 0; i < MAX_INPUT; i++)
             {
@@ -40,85 +41,78 @@ namespace StabilityApp
                 InitializeComponent();
         }
 
-        #region Button Click
+       
+
+        private int Current_Input
+        {
+            get
+            {
+                return _current_input;
+            }
+            set
+            {
+                _current_input = value;
+                if (_current_input == MAX_INPUT)
+                    display_result();
+                    
+            }
+        }
         
+        #region Button Click
+
         private void Up_Button_Click(object sender, RoutedEventArgs e)
         {
-           
-            if(current_input <= MAX_INPUT)
-            { 
-                user_input[current_input] = 0;
-                current_input++;
-                display_result();
-            }
+                user_input[_current_input] = 0;
+                Current_Input = Current_Input + 1;
         }
 
         private void Down_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (current_input <= MAX_INPUT)
-            {
-                user_input[current_input] = 1;
-                current_input++;
-                display_result();
-            }
+                user_input[_current_input] = 1;
+                Current_Input = Current_Input + 1;
         }
 
         private void Left_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (current_input <= MAX_INPUT)
-            {
-                user_input[current_input] = 2;
-                current_input++;
-                display_result();
-            }
+                user_input[_current_input] = 2;
+                Current_Input = Current_Input + 1;
         }
 
         private void Right_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (current_input <= MAX_INPUT)
-            {
-                user_input[current_input] = 3;
-                current_input++;
-                display_result();
-            }
-
+                user_input[_current_input] = 3;
+                Current_Input = Current_Input + 1;
         }
 
         #endregion
 
-        void display_result()
+        void display_result() //callback function
         {
-            //will move alot of this to the a result page
+            
             DateTime time_end = DateTime.Now;
             TimeSpan difference = time_end.Subtract(timer);
             time_stamp = difference.ToString();
             bool combination_error = true;
-            if (current_input == 4)
-            {
-                for (int i = 0; i < MAX_INPUT; i++)
-                {
-                    if (user_input[i] != combination[i])
-                    {
-                        combination_error = false;
-                        break;
-                    }
-                }
 
-                if (combination_error)
+            for (int i = 0; i < MAX_INPUT; i++)
+            {
+                if (user_input[i] != combination[i])
                 {
-                    MessageBox.Show("Correct combination The timer is " + time_stamp);
+                    combination_error = false;
+                    break;
                 }
-                else
-                {
-                    MessageBox.Show("Wrong combination");
-                }
+            }
+
+            //this will be moved to the next page
+            if (combination_error)
+            {
+                MessageBox.Show("Correct combination The timer is " + time_stamp);
+            }
+            else
+            {
+                MessageBox.Show("Wrong combination");
             }
         }
 
-        
-
-        
-
-        
     }
 }

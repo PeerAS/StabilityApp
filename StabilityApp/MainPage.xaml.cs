@@ -21,7 +21,7 @@ namespace StabilityApp
             InitializeComponent();
         }
 
-        private void continue_Click(object sender, RoutedEventArgs e)
+        private void cognitiv_Test_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/CognitivTest.xaml", UriKind.Relative));
         }
@@ -29,6 +29,11 @@ namespace StabilityApp
         private void math_Test_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/Mathproblem.xaml", UriKind.Relative));
+        }
+
+        private void motion_Test_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/MotionTest.xaml", UriKind.Relative));
         }
     }
 }
