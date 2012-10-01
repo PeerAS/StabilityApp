@@ -19,7 +19,8 @@ namespace StabilityApp
         private int[] combination;
         private int[] user_input;
         private string time_stamp;
-        private int _current_input = 0;
+        private string mode;
+        private int _current_input;
         private const int MAX_INPUT = 4;
 
         private Random rand;
@@ -27,7 +28,7 @@ namespace StabilityApp
 
         public CognitivTest()
         {
-            
+            _current_input = 0;
             combination = new int[4];
             user_input = new int[4];
             rand = new Random();
@@ -41,8 +42,14 @@ namespace StabilityApp
                 InitializeComponent();
         }
 
-       
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
+            NavigationContext.QueryString.TryGetValue("mode", out mode);
+        }
+
+       
         private int Current_Input
         {
             get
@@ -54,7 +61,6 @@ namespace StabilityApp
                 _current_input = value;
                 if (_current_input == MAX_INPUT)
                     display_result();
-                    
             }
         }
         
@@ -91,7 +97,7 @@ namespace StabilityApp
             
             DateTime time_end = DateTime.Now;
             TimeSpan difference = time_end.Subtract(timer);
-            time_stamp = difference.ToString();
+            time_stamp = difference.ToString("c");
             bool combination_error = true;
 
             for (int i = 0; i < MAX_INPUT; i++)
@@ -103,15 +109,29 @@ namespace StabilityApp
                 }
             }
 
-            //this will be moved to the next page
-            if (combination_error)
+            if (mode.Equals("calibrate") && combination_error == true)
             {
-                MessageBox.Show("Correct combination The timer is " + time_stamp);
+                this.NavigationService.Navigate(new Uri("/MotionTest.xaml?mode=" + mode, UriKind.Relative));
+            }
+            else if (mode.Equals("calibrate") && combination_error == false)
+            {
+                MessageBox.Show("Wrong combination input. Please try again");
+                
+                this.NavigationService.Navigate(new Uri("/CognitivTest.xaml?mode=" + mode, UriKind.Relative));
             }
             else
             {
-                MessageBox.Show("Wrong combination");
+                this.NavigationService.Navigate(new Uri("/ResultPage.xaml?result=" + combination_error, UriKind.Relative));
             }
+            //this will be moved to the next page
+            //if (combination_error)
+            //{
+            //    MessageBox.Show("Correct combination The timer is " + time_stamp);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Wrong combination");
+            //}
         }
 
     }

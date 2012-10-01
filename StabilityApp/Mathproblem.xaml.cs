@@ -17,6 +17,8 @@ namespace StabilityApp
     {
         private string[] mathProblems;
         private string[] mathSolutions;
+        private string userSolution;
+        private string mode;
         private Random randomNumber;
         private int problemNumber;
         
@@ -36,6 +38,24 @@ namespace StabilityApp
             displayProblem();
         }
 
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            NavigationContext.QueryString.TryGetValue("mode", out mode);
+
+            if (mode.Equals("calibrate"))
+            {
+                submit_Button.Visibility = Visibility.Collapsed;
+                continue_Button.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                submit_Button.Visibility = Visibility.Visible;
+                continue_Button.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private void displayProblem()
         {
             this.MathProblem.Text = mathProblems[problemNumber];
@@ -43,7 +63,7 @@ namespace StabilityApp
 
         private void submit_Button_Click(object sender, RoutedEventArgs e)
         {
-            string userSolution;
+            
             userSolution = this.Solution.Text;
 
             if (userSolution.Equals(mathSolutions[problemNumber]))
@@ -54,6 +74,11 @@ namespace StabilityApp
             {
                 MessageBox.Show("You are to drunk for this");
             }
+        }
+
+        private void continue_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/CognitivTest.xaml?mode=calibrate", UriKind.Relative));
         }
 
     }

@@ -32,7 +32,8 @@
             <TextBlock Height="84" HorizontalAlignment="Left" Margin="0,173,0,0" x:Name="MathProblem" Text="" VerticalAlignment="Top" Width="456" FontSize="40" FontWeight="Bold" TextAlignment="Center" />
             <TextBlock Height="67" HorizontalAlignment="Center" Margin="0,275,0,0" Name="textBlock1" Text="=" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="30" />
             <TextBox Height="72" HorizontalAlignment="Center" Margin="0,348,0,0" x:Name="Solution" Text="" VerticalAlignment="Top" Width="287" />
-            <Button Content="Submit" Height="72" HorizontalAlignment="Left" Margin="138,476,0,0" x:Name="submit_Button" VerticalAlignment="Top" Width="160" Click="submit_Button_Click" />
+            <Button Content="Submit" Visibility="Visible" Height="72" HorizontalAlignment="Left" Margin="138,476,0,0" x:Name="submit_Button" VerticalAlignment="Top" Width="160" Click="submit_Button_Click" />
+            <Button Content="Continue" Visibility="Collapsed" Height="72" HorizontalAlignment="Left" Margin="138,476,0,0" x:Name="continue_Button" VerticalAlignment="Top" Width="160" Click="continue_Button_Click" />
         </Grid>
     </Grid>
  
