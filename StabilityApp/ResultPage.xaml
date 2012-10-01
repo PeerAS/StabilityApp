@@ -31,9 +31,6 @@
             <TextBlock Height="101" HorizontalAlignment="Left" Margin="75,72,0,0" x:Name="Result_Text" Text="" VerticalAlignment="Top" Width="306" TextAlignment="Center" FontSize="40" FontWeight="Bold" />
             <Button Content="Main Menu" Height="72" Margin="0,467,0,0" Name="main_menu_button" VerticalAlignment="Top" Click="main_menu_button_Click" HorizontalAlignment="Center" />
         </Grid>
-        <Image Margin="0,0,0,-32" Grid.RowSpan="2" Source="/SplashScreenImage.jpg" Stretch="Fill"/>
-        <Image HorizontalAlignment="Left" Height="62" Source="/ApplicationIcon.png" Stretch="Fill" VerticalAlignment="Top" Width="62"/>
-        <Image HorizontalAlignment="Left" Margin="0,0,0,-12" Source="/Background.png" Stretch="Fill" Width="173"/>
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->

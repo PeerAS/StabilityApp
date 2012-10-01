@@ -121,7 +121,7 @@ namespace StabilityApp
             }
             else
             {
-                this.NavigationService.Navigate(new Uri("/ResultPage.xaml?result=" + combination_error, UriKind.Relative));
+                this.NavigationService.Navigate(new Uri("/ResultPage.xaml?mode=" + mode + "&result=" + combination_error, UriKind.Relative));
             }
             //this will be moved to the next page
             //if (combination_error)

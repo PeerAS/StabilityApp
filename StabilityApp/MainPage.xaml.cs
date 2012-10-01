@@ -23,17 +23,17 @@ namespace StabilityApp
 
         private void cognitiv_Test_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/CognitivTest.xaml?mode=test", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("/CognitivTest.xaml?mode=cognitiv", UriKind.Relative));
         }
 
         private void math_Test_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/Mathproblem.xaml?mode=test", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("/Mathproblem.xaml?mode=math", UriKind.Relative));
         }
 
         private void motion_Test_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/MotionTest.xaml?mode=test", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("/MotionTest.xaml?mode=motion", UriKind.Relative));
         }
 
         private void calibrate_Click(object sender, RoutedEventArgs e)

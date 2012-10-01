@@ -21,6 +21,7 @@ namespace StabilityApp
         private string mode;
         private Random randomNumber;
         private int problemNumber;
+        private bool result;
         
 
         public Mathproblem()
@@ -44,8 +45,8 @@ namespace StabilityApp
 
             NavigationContext.QueryString.TryGetValue("mode", out mode);
 
-            if (mode.Equals("calibrate"))
-            {
+            if (mode.Equals("calibrate"))   //this checks if we are calibrating or not
+            {                               //if we are calibrating the button saying continue will show, if not the button saying submit will show
                 submit_Button.Visibility = Visibility.Collapsed;
                 continue_Button.Visibility = Visibility.Visible;
             }
@@ -58,7 +59,7 @@ namespace StabilityApp
 
         private void displayProblem()
         {
-            this.MathProblem.Text = mathProblems[problemNumber];
+            this.MathProblem.Text = mathProblems[problemNumber];    //displays the mathproblem/equation
         }
 
         private void submit_Button_Click(object sender, RoutedEventArgs e)
@@ -66,8 +67,10 @@ namespace StabilityApp
             
             userSolution = this.Solution.Text;
 
-            if (userSolution.Equals(mathSolutions[problemNumber]))
+            result = userSolution.Equals(mathSolutions[problemNumber]);
+            if (result)
             {
+                this.NavigationService.Navigate(new Uri("/ResultPage.xaml?mode=" + mode + "&result=" + result, UriKind.Relative));
                 MessageBox.Show("You were correct " + problemNumber);
             }
             else
