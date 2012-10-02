@@ -23,8 +23,10 @@ namespace StabilityApp
         private int _current_input;
         private const int MAX_INPUT = 4;
 
+
         private Random rand;
         DateTime timer;
+        private TimeSpan time_start;
 
         public CognitivTest()
         {
@@ -33,6 +35,7 @@ namespace StabilityApp
             user_input = new int[4];
             rand = new Random();
             timer = DateTime.Now;
+            time_start = new TimeSpan(0, 0, 3);
 
             for (int i = 0; i < MAX_INPUT; i++)
             {
@@ -47,9 +50,28 @@ namespace StabilityApp
             base.OnNavigatedTo(e);
 
             NavigationContext.QueryString.TryGetValue("mode", out mode);
+            display_combination(); //must be moved since it starts running before page is displayed
         }
 
-       
+        private void display_combination()
+        {
+            TimeSpan delay = new TimeSpan(0,0,1);
+            for (int i = 0; i < MAX_INPUT; i++)
+            {
+                switch(combination[i])
+                {
+                    case 0: button_flash(this.Up_Button_Animation, time_start); break;
+                    case 1: button_flash(this.Down_Button_Animaton, time_start); break;
+                    case 2: button_flash(this.Left_Button_Animation, time_start); break;
+                    case 3: button_flash(this.Right_Button_Animation, time_start); break;                    
+                }
+
+               time_start = time_start.Add(delay);
+                
+               
+            }
+        }
+
         private int Current_Input
         {
             get
@@ -92,7 +114,7 @@ namespace StabilityApp
 
         #endregion
 
-        void display_result() //callback function
+        void display_result()
         {
             
             DateTime time_end = DateTime.Now;
@@ -134,5 +156,10 @@ namespace StabilityApp
             //}
         }
 
+        void button_flash(Storyboard sb, TimeSpan begin)
+        {   
+            sb.BeginTime = begin;
+            sb.Begin();
+        }
     }
 }

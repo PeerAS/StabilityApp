@@ -28,11 +28,30 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Button Content="Up" x:Name="Up_Button" Height="72" HorizontalAlignment="Center" Margin="0,68,0,0" VerticalAlignment="Top" Width="160" Click="Up_Button_Click" />
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Storyboard x:Name="Up_Button_Animation">
+                        <DoubleAnimation Storyboard.TargetName="Up_Button" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5" AutoReverse="True"/>
+                    </Storyboard>
+                    <Storyboard x:Name="Down_Button_Animaton">
+                        <DoubleAnimation Storyboard.TargetName="Down_Button" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5" AutoReverse="True"/>
+                    </Storyboard>
+                    <Storyboard x:Name="Right_Button_Animation">
+                        <DoubleAnimation Storyboard.TargetName="Right_Button" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5" AutoReverse="True"/>
+                    </Storyboard>
+                    <Storyboard x:Name="Left_Button_Animation">
+                        <DoubleAnimation Storyboard.TargetName="Left_Button" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5" AutoReverse="True"/>
+                    </Storyboard>                    
+                </StackPanel.Resources>
+               
+            </StackPanel>
+
+            <Button Content="Up" x:Name="Up_Button" Height="72" HorizontalAlignment="Center" Margin="0,68,0,0" VerticalAlignment="Top" Width="160" Click="Up_Button_Click"/>
             <Button Content="Down" Height="72" HorizontalAlignment="Center" Margin="0,459,0,0" x:Name="Down_Button" VerticalAlignment="Top" Width="160" Click="Down_Button_Click" />
             <Button Content="Right" Height="72" HorizontalAlignment="Left" Margin="290,0,0,0" x:Name="Right_Button" VerticalAlignment="Center" Width="160" Click="Right_Button_Click" />
             <Button Content="Left" Height="72" HorizontalAlignment="Left" Margin="0" x:Name="Left_Button" VerticalAlignment="Center" Width="160" Click="Left_Button_Click" />
-        </Grid>
+
+          </Grid>
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->

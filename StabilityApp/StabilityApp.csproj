@@ -117,6 +117,7 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Image_Resources\Cognitiv_button.png" />
     <Content Include="Requirements.txt" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
