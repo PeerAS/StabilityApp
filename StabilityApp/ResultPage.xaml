@@ -28,7 +28,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBlock Height="101" HorizontalAlignment="Left" Margin="75,72,0,0" x:Name="Result_Text" Text="" VerticalAlignment="Top" Width="306" TextAlignment="Center" FontSize="40" FontWeight="Bold" />
+            <TextBlock Height="345" HorizontalAlignment="Left" Margin="12,72,0,0" x:Name="Result_Text" Text="" VerticalAlignment="Top" Width="438" TextAlignment="Center" FontSize="40" FontWeight="Bold" TextWrapping="Wrap" />
             <Button Content="Main Menu" Height="72" Margin="0,467,0,0" Name="main_menu_button" VerticalAlignment="Top" Click="main_menu_button_Click" HorizontalAlignment="Center" />
         </Grid>
     </Grid>

@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
+using System.Data.Linq.Mapping;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -9,20 +13,27 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Microsoft.Phone.Controls;
 
 namespace StabilityApp
 {
-    public partial class Mathproblem : PhoneApplicationPage
+    public partial class Mathproblem : PhoneApplicationPage, INotifyPropertyChanged
     {
         private string[] mathProblems;
         private string[] mathSolutions;
         private string userSolution;
         private string mode;
+        private string time_stamp;
         private Random randomNumber;
         private int problemNumber;
         private bool result;
-        
+        private DateTime timer;
+
+        private DatabaseContext mathDB;
+        private ObservableCollection<Math_Info> _Math_Info;
+
+        public event PropertyChangedEventHandler PropertyChanged;        
 
         public Mathproblem()
         {
@@ -30,19 +41,27 @@ namespace StabilityApp
             mathSolutions = new string[10];
             randomNumber = new Random();
             problemNumber = randomNumber.Next(10);
-
+            
             mathProblems[problemNumber] = "1+1";
             mathSolutions[problemNumber] = "2";
 
             InitializeComponent();
 
+            mathDB = new DatabaseContext(DatabaseContext.Database_Connection);
+            this.DataContext = this;
+
             displayProblem();
+            this.Loaded += new RoutedEventHandler(Mathproblem_Loaded);
         }
+
+        void Mathproblem_Loaded(object sender, RoutedEventArgs e)
+        {
+            timer = DateTime.Now;
+        }
+
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
-
             NavigationContext.QueryString.TryGetValue("mode", out mode);
 
             if (mode.Equals("calibrate"))   //this checks if we are calibrating or not
@@ -55,6 +74,13 @@ namespace StabilityApp
                 submit_Button.Visibility = Visibility.Visible;
                 continue_Button.Visibility = Visibility.Collapsed;
             }
+
+            var mathItemsInDB = from Math_Info math in mathDB.Math_Information
+                                select math;
+
+            Math_Info_Items = new ObservableCollection<Math_Info>(mathItemsInDB);
+            
+            base.OnNavigatedTo(e);
         }
 
         private void displayProblem()
@@ -64,19 +90,18 @@ namespace StabilityApp
 
         private void submit_Button_Click(object sender, RoutedEventArgs e)
         {
-            
             userSolution = this.Solution.Text;
+            DateTime time_end = DateTime.Now;
+            TimeSpan difference = time_end.Subtract(timer);
+            time_stamp = difference.ToString("c");
 
             result = userSolution.Equals(mathSolutions[problemNumber]);
-            if (result)
-            {
-                this.NavigationService.Navigate(new Uri("/ResultPage.xaml?mode=" + mode + "&result=" + result, UriKind.Relative));
-                MessageBox.Show("You were correct " + problemNumber);
-            }
-            else
-            {
-                MessageBox.Show("You are to drunk for this");
-            }
+
+            Math_Info newMathInfo = new Math_Info { solution_time = time_stamp };
+
+            //remember this must be switch to id...
+
+            this.NavigationService.Navigate(new Uri("/ResultPage.xaml?mode=" + mode + "&result=" + result + "&time=" + time_stamp, UriKind.Relative));
         }
 
         private void continue_Button_Click(object sender, RoutedEventArgs e)
@@ -84,5 +109,32 @@ namespace StabilityApp
             this.NavigationService.Navigate(new Uri("/CognitivTest.xaml?mode=calibrate", UriKind.Relative));
         }
 
+        #region Database functions
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public ObservableCollection<Math_Info> Math_Info_Items
+        {
+            get
+            {
+                return _Math_Info;
+            }
+            set
+            {
+                if (_Math_Info != value)
+                {
+                    _Math_Info = value;
+                    NotifyPropertyChanged("Math_Info_Items");
+                }
+            }
+        }
+
+        #endregion
     }
 }

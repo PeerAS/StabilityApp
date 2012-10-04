@@ -17,6 +17,7 @@ namespace StabilityApp
     {
         private string mode;
         private string result;
+        private string time;
 
         public ResultPage()
         {
@@ -29,10 +30,25 @@ namespace StabilityApp
 
             NavigationContext.QueryString.TryGetValue("mode", out mode);
             NavigationContext.QueryString.TryGetValue("result", out result);
+            NavigationContext.QueryString.TryGetValue("time", out time);
+
+            if (result.Equals("True"))
+            {
+                this.Result_Text.Text = "Congratulations \n you are free to drive";
+            }
+            else
+            {
+                this.Result_Text.Text = "I'm sorry \n You are to drunk or tired to drive";
+            }
         }
         private void main_menu_button_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
+        void result_display(string resultDisplay, string time)
+        {
+            
         }
 
 

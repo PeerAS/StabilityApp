@@ -35,7 +35,7 @@ namespace StabilityApp
             user_input = new int[4];
             rand = new Random();
             timer = DateTime.Now;
-            time_start = new TimeSpan(0, 0, 3);
+            time_start = new TimeSpan(0, 0, 0);
 
             for (int i = 0; i < MAX_INPUT; i++)
             {
@@ -43,6 +43,13 @@ namespace StabilityApp
             }
 
                 InitializeComponent();
+
+                this.Loaded += new RoutedEventHandler(CognitivTest_Loaded);
+        }
+
+        void CognitivTest_Loaded(object sender, RoutedEventArgs e)
+        {
+            display_combination();
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -50,7 +57,7 @@ namespace StabilityApp
             base.OnNavigatedTo(e);
 
             NavigationContext.QueryString.TryGetValue("mode", out mode);
-            display_combination(); //must be moved since it starts running before page is displayed
+            
         }
 
         private void display_combination()
