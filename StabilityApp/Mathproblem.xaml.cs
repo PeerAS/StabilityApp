@@ -4,6 +4,7 @@ using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -22,6 +23,7 @@ namespace StabilityApp
     {
         private string[] mathProblems;
         private string[] mathSolutions;
+        Math_Info[] list_array;
         private string userSolution;
         private string mode;
         private string time_stamp;
@@ -39,8 +41,10 @@ namespace StabilityApp
         {
             mathProblems = new string[10];
             mathSolutions = new string[10];
+            list_array = new Math_Info[100];
             randomNumber = new Random();
             problemNumber = randomNumber.Next(10);
+            
             
             mathProblems[problemNumber] = "1+1";
             mathSolutions[problemNumber] = "2";
@@ -76,9 +80,12 @@ namespace StabilityApp
             }
 
             var mathItemsInDB = from Math_Info math in mathDB.Math_Information
-                                select math;
+                                where math.mathID == 0 select math;
+            
 
             Math_Info_Items = new ObservableCollection<Math_Info>(mathItemsInDB);
+
+            List<Math_Info> derpe = new List<Math_Info>(Math_Info_Items);
             
             base.OnNavigatedTo(e);
         }
@@ -94,10 +101,12 @@ namespace StabilityApp
             DateTime time_end = DateTime.Now;
             TimeSpan difference = time_end.Subtract(timer);
             time_stamp = difference.ToString("c");
-
+            
             result = userSolution.Equals(mathSolutions[problemNumber]);
 
             Math_Info newMathInfo = new Math_Info { solution_time = time_stamp };
+            Math_Info_Items.Add(newMathInfo);
+            mathDB.Math_Information.InsertOnSubmit(newMathInfo);
 
             //remember this must be switch to id...
 
@@ -109,6 +118,13 @@ namespace StabilityApp
             this.NavigationService.Navigate(new Uri("/CognitivTest.xaml?mode=calibrate", UriKind.Relative));
         }
 
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+
+            base.OnNavigatedFrom(e);
+
+            mathDB.SubmitChanges();
+        }
         #region Database functions
 
         private void NotifyPropertyChanged(string propertyName)

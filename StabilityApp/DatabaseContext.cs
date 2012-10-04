@@ -160,7 +160,7 @@ namespace StabilityApp
     [Table]
     public class Cognitiv_Test_Info: INotifyPropertyChanged, INotifyPropertyChanging
     {
-        private int _cognitivID; //change the id to IsDbGenerated, autoincrements and everything :D
+        private int _cognitivID;
 
         [Column(IsPrimaryKey=true, IsDbGenerated=true)]
         public int cognitivID
