@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -15,10 +17,17 @@ namespace StabilityApp
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        private string local;
+        private string culture;
         // Constructor
         public MainPage()
         {
+            
             InitializeComponent();
+        }
+
+        private void LocList_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
+        {
         }
 
         private void cognitiv_Test_Click(object sender, RoutedEventArgs e)
