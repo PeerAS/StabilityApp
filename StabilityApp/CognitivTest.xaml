@@ -22,8 +22,8 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding Path=localizedResources.AppTitle, Source={StaticResource Localization}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Path=localizedResources.CognitivTest_name, Source={StaticResource Localization}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -46,10 +46,10 @@
                
             </StackPanel>
 
-            <Button Content="Up" x:Name="Up_Button" Height="72" HorizontalAlignment="Center" Margin="0,68,0,0" VerticalAlignment="Top" Width="160" Click="Up_Button_Click"/>
-            <Button Content="Down" Height="72" HorizontalAlignment="Center" Margin="0,459,0,0" x:Name="Down_Button" VerticalAlignment="Top" Width="160" Click="Down_Button_Click" />
-            <Button Content="Right" Height="72" HorizontalAlignment="Left" Margin="290,0,0,0" x:Name="Right_Button" VerticalAlignment="Center" Width="160" Click="Right_Button_Click" />
-            <Button Content="Left" Height="72" HorizontalAlignment="Left" Margin="0" x:Name="Left_Button" VerticalAlignment="Center" Width="160" Click="Left_Button_Click" />
+            <Button Content="{Binding Path=localizedResources.CognitivTest_up, Source={StaticResource Localization}}" x:Name="Up_Button" Height="72" HorizontalAlignment="Center" Margin="0,68,0,0" VerticalAlignment="Top" Width="160" Click="Up_Button_Click"/>
+            <Button Content="{Binding Path=localizedResources.CognitivTest_down, Source={StaticResource Localization}}" Height="72" HorizontalAlignment="Center" Margin="0,459,0,0" x:Name="Down_Button" VerticalAlignment="Top" Width="160" Click="Down_Button_Click" />
+            <Button Content="{Binding Path=localizedResources.CognitivTest_right, Source={StaticResource Localization}}" Height="72" HorizontalAlignment="Left" Margin="290,0,0,0" x:Name="Right_Button" VerticalAlignment="Center" Width="160" Click="Right_Button_Click" />
+            <Button Content="{Binding Path=localizedResources.CognitivTest_left, Source={StaticResource Localization}}" Height="72" HorizontalAlignment="Left" Margin="0" x:Name="Left_Button" VerticalAlignment="Center" Width="160" Click="Left_Button_Click" />
 
           </Grid>
     </Grid>

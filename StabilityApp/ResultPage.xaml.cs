@@ -27,12 +27,12 @@ namespace StabilityApp
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
+            //does a get-style request to check data that is passed
             NavigationContext.QueryString.TryGetValue("mode", out mode);
             NavigationContext.QueryString.TryGetValue("result", out result);
             NavigationContext.QueryString.TryGetValue("time", out time);
 
-            if (result.Equals("True"))
+            if (result.Equals("True"))  //
             {
                 this.Result_Text.Text = "Congratulations \n you are free to drive";
             }
@@ -45,12 +45,6 @@ namespace StabilityApp
         {
             this.NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
-
-        void result_display(string resultDisplay, string time)
-        {
-            
-        }
-
 
     }
 }

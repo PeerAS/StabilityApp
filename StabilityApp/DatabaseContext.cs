@@ -29,6 +29,7 @@ namespace StabilityApp
 
         public Table<Math_Info> Math_Information;
         public Table<Cognitiv_Test_Info> Cognitiv_Test_Information;
+        public Table<Motion_Test_Info> Motion_Test_Information;
     }
 
     [Table]
@@ -248,7 +249,7 @@ namespace StabilityApp
     {
         private int _motionID;
 
-        [Column]
+        [Column(IsPrimaryKey=true, IsDbGenerated=true)]
         public int motionID
         {
             get
@@ -322,46 +323,6 @@ namespace StabilityApp
                     NotifyPropertyChanging("calibratedZ");
                     _calibratedZ = value;
                     NotifyPropertyChanged("calibratedZ");
-                }
-            }
-        }
-
-        private string _solution_time;
-
-        [Column]
-        public string solution_time
-        {
-            get
-            {
-                return _solution_time;
-            }
-            set
-            {
-                if (_solution_time != value)
-                {
-                    NotifyPropertyChanging("solution_time");
-                    _solution_time = value;
-                    NotifyPropertyChanged("solution_time");
-                }
-            }
-        }
-
-        private string _calibrate_time;
-
-        [Column]
-        public string calibrate_time
-        {
-            get
-            {
-                return _calibrate_time;
-            }
-            set
-            {
-                if (_calibrate_time != value)
-                {
-                    NotifyPropertyChanging("calibrate_time");
-                    _calibrate_time = value;
-                    NotifyPropertyChanged("calibrate_time");
                 }
             }
         }

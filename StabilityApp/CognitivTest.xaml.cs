@@ -53,8 +53,6 @@ namespace StabilityApp
             InitializeComponent();
             cognitiveDB = new DatabaseContext(DatabaseContext.Database_Connection);
             this.DataContext = this;
-
-            this.Loaded += new RoutedEventHandler(CognitivTest_Loaded);
         }
 
         void CognitivTest_Loaded(object sender, RoutedEventArgs e)
@@ -64,8 +62,10 @@ namespace StabilityApp
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
+            this.Loaded += new RoutedEventHandler(CognitivTest_Loaded);
             base.OnNavigatedTo(e);
 
+            _current_input = 0;
             NavigationContext.QueryString.TryGetValue("mode", out mode);
             
         }

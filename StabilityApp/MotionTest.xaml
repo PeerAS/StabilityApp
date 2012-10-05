@@ -22,14 +22,14 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding Path=localizedResources.AppTitle, Source={StaticResource Localization}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Path=localizedResources.MainPage_motionTest, Source={StaticResource Localization}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <Button Content="Start" Height="72" HorizontalAlignment="Left" Margin="145,122,0,0" Name="start_Accelerometer" VerticalAlignment="Top" Width="160" Click="start_Accelerometer_Click" />
-            <TextBlock Height="274" HorizontalAlignment="Left" Margin="50,282,0,0" x:Name="Accelerometer_output" Text="" VerticalAlignment="Top" Width="367" TextWrapping="Wrap" />
+            <TextBlock Height="344" HorizontalAlignment="Left" Margin="50,212,0,0" x:Name="Accelerometer_output" Text="" VerticalAlignment="Top" Width="367" TextWrapping="Wrap" FontSize="40" TextAlignment="Center" />
         </Grid>
     </Grid>
  

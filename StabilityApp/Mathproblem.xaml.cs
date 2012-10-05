@@ -23,7 +23,6 @@ namespace StabilityApp
     {
         private string[] mathProblems;
         private string[] mathSolutions;
-        Math_Info[] list_array;
         private string userSolution;
         private string mode;
         private string time_stamp;
@@ -33,43 +32,58 @@ namespace StabilityApp
         private DateTime timer;
         private DateTime time_end;
         private TimeSpan difference;
-        private List<Math_Info> derpe;
 
         private DatabaseContext mathDB;
         private ObservableCollection<Math_Info> _Math_Info;
 
-        public event PropertyChangedEventHandler PropertyChanged;        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        public ObservableCollection<Math_Info> Math_Info_Items
+        {
+            get
+            {
+                return _Math_Info;
+            }
+            set
+            {
+                if (_Math_Info != value)
+                {
+                    _Math_Info = value;
+                    NotifyPropertyChanged("Math_Info_Items");
+                }
+            }
+        }
 
         public Mathproblem()
         {
             mathProblems = new string[10];
             mathSolutions = new string[10];
-            list_array = new Math_Info[100];
             randomNumber = new Random();
             problemNumber = randomNumber.Next(10);
             
-            
+            //here i set the specified array index from random problemNumber to be a placeholder question
+            //in a better version this would get its data directly from the database
             mathProblems[problemNumber] = "1+1";
             mathSolutions[problemNumber] = "2";
 
             InitializeComponent();
 
-            mathDB = new DatabaseContext(DatabaseContext.Database_Connection);
+            mathDB = new DatabaseContext(DatabaseContext.Database_Connection); //creates a connection to the database
             this.DataContext = this;
 
             displayProblem();
-            this.Loaded += new RoutedEventHandler(Mathproblem_Loaded);
+            this.Loaded += new RoutedEventHandler(Mathproblem_Loaded); //creates an event handler for when the page is finished loading
         }
 
         void Mathproblem_Loaded(object sender, RoutedEventArgs e)
         {
-            timer = DateTime.Now;
+            timer = DateTime.Now; //gets the exact time
         }
 
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            NavigationContext.QueryString.TryGetValue("mode", out mode);
+            NavigationContext.QueryString.TryGetValue("mode", out mode);    //uses a get-style request to check if im calibrating or performing an actual test
 
             if (mode.Equals("calibrate"))   //this checks if we are calibrating or not
             {                               //if we are calibrating the button saying continue will show, if not the button saying submit will show
@@ -82,36 +96,35 @@ namespace StabilityApp
                 continue_Button.Visibility = Visibility.Collapsed;
             }
 
-            var mathItemsInDB = from Math_Info math in mathDB.Math_Information
-                                where math.mathID == 0 select math;
+            var mathItemsInDB = from Math_Info math in mathDB.Math_Information  //fetches the math_info from the database 
+                                where math.mathID == 0 select math;             //the 0 here should be switched to a randomgenerated number giving the user a
+                                                                                //new question frequently          
             
+            Math_Info_Items = new ObservableCollection<Math_Info>(mathItemsInDB); //moves the fetched items into an observable container
 
-            Math_Info_Items = new ObservableCollection<Math_Info>(mathItemsInDB);
-
-            List<Math_Info> derpe = new List<Math_Info>(Math_Info_Items);
             
             base.OnNavigatedTo(e);
         }
 
         private void displayProblem()
-        {
+        {   
             this.MathProblem.Text = mathProblems[problemNumber];    //displays the mathproblem/equation, must be switched to a ID from the datbase
         }
 
         private void submit_Button_Click(object sender, RoutedEventArgs e)
         {
-            userSolution = this.Solution.Text;
-            time_end = DateTime.Now;
-            difference = time_end.Subtract(timer);
-            time_stamp = difference.ToString("c");
+            userSolution = this.Solution.Text;  //fetches the users answer
+            time_end = DateTime.Now;    //gets the time
+            difference = time_end.Subtract(timer);  //gets the time difference for comparison
+            time_stamp = difference.ToString("c");  //and formats is
             
             result = userSolution.Equals(mathSolutions[problemNumber]);
 
-            Math_Info newMathInfo = new Math_Info { solution_time = time_stamp };
-            Math_Info_Items.Add(newMathInfo);
+            Math_Info newMathInfo = new Math_Info { solution_time = time_stamp };   //puts the users used time into the database
+            Math_Info_Items.Add(newMathInfo);   
             mathDB.Math_Information.InsertOnSubmit(newMathInfo);
 
-            //remember this must be switch to id...
+            //remember this must be switch to id and an update query
 
             this.NavigationService.Navigate(new Uri("/ResultPage.xaml?mode=" + mode + "&result=" + result + "&time=" + time_stamp, UriKind.Relative));
         }
@@ -132,12 +145,10 @@ namespace StabilityApp
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
-
             base.OnNavigatedFrom(e);
 
-            mathDB.SubmitChanges();
+            mathDB.SubmitChanges(); //submits the changes to the database
         }
-        #region Database functions
 
         private void NotifyPropertyChanged(string propertyName)
         {
@@ -146,23 +157,5 @@ namespace StabilityApp
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        public ObservableCollection<Math_Info> Math_Info_Items
-        {
-            get
-            {
-                return _Math_Info;
-            }
-            set
-            {
-                if (_Math_Info != value)
-                {
-                    _Math_Info = value;
-                    NotifyPropertyChanged("Math_Info_Items");
-                }
-            }
-        }
-
-        #endregion
     }
 }

@@ -22,18 +22,18 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding Path=localizedResources.AppTitle, Source={StaticResource Localization}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Path=localizedResources.Mathproblem_name, Source={StaticResource Localization}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBlock Height="114" HorizontalAlignment="Center" Name="MathInfo" Text="Solve the following math problem:" VerticalAlignment="Top" Width="378" TextWrapping="Wrap" FontWeight="Bold" TextAlignment="Center" FontSize="40" />
+            <TextBlock Height="137" HorizontalAlignment="Center" Name="MathInfo" Text="{Binding Path=localizedResources.Mathproblem_mathInfo, Source={StaticResource Localization}}" VerticalAlignment="Top" Width="389" TextWrapping="Wrap" FontWeight="Bold" TextAlignment="Center" FontSize="40" Margin="39,0,28,0" />
             <TextBlock Height="84" HorizontalAlignment="Left" Margin="0,173,0,0" x:Name="MathProblem" Text="" VerticalAlignment="Top" Width="456" FontSize="40" FontWeight="Bold" TextAlignment="Center" />
             <TextBlock Height="67" HorizontalAlignment="Center" Margin="0,275,0,0" Name="textBlock1" Text="=" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="30" />
             <TextBox Height="72" HorizontalAlignment="Center" Margin="0,348,0,0" x:Name="Solution" Text="" VerticalAlignment="Top" Width="287" />
-            <Button Content="Submit" Visibility="Visible" Height="72" HorizontalAlignment="Left" Margin="138,476,0,0" x:Name="submit_Button" VerticalAlignment="Top" Width="160" Click="submit_Button_Click" />
-            <Button Content="Continue" Visibility="Collapsed" Height="72" HorizontalAlignment="Left" Margin="138,476,0,0" x:Name="continue_Button" VerticalAlignment="Top" Width="160" Click="continue_Button_Click" />
+            <Button Content="{Binding Path=localizedResources.Mathproblem_submit, Source={StaticResource Localization}}" Visibility="Visible" Height="72" HorizontalAlignment="Left" Margin="138,476,0,0" x:Name="submit_Button" VerticalAlignment="Top" Width="160" Click="submit_Button_Click" />
+            <Button Content="{Binding Path=localizedResources.Mathproblem_continue, Source={StaticResource Localization}}" Visibility="Collapsed" Height="72" HorizontalAlignment="Left" Margin="138,476,0,0" x:Name="continue_Button" VerticalAlignment="Top" Width="160" Click="continue_Button_Click" />
         </Grid>
     </Grid>
  

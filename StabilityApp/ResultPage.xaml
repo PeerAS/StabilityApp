@@ -22,14 +22,14 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding Path=localizedResources.AppTitle, Source={StaticResource Localization}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Path=localizedResources.ResultPage_name, Source={StaticResource Localization}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <TextBlock Height="345" HorizontalAlignment="Left" Margin="12,72,0,0" x:Name="Result_Text" Text="" VerticalAlignment="Top" Width="438" TextAlignment="Center" FontSize="40" FontWeight="Bold" TextWrapping="Wrap" />
-            <Button Content="Main Menu" Height="72" Margin="0,467,0,0" Name="main_menu_button" VerticalAlignment="Top" Click="main_menu_button_Click" HorizontalAlignment="Center" />
+            <Button Content="{Binding Path=localizedResources.Result_main, Source={StaticResource Localization}}" Height="72" Margin="0,467,0,0" Name="main_menu_button" VerticalAlignment="Top" Click="main_menu_button_Click" HorizontalAlignment="Center" />
         </Grid>
     </Grid>
  
