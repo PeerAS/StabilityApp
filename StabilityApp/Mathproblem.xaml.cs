@@ -31,6 +31,9 @@ namespace StabilityApp
         private int problemNumber;
         private bool result;
         private DateTime timer;
+        private DateTime time_end;
+        private TimeSpan difference;
+        private List<Math_Info> derpe;
 
         private DatabaseContext mathDB;
         private ObservableCollection<Math_Info> _Math_Info;
@@ -92,14 +95,14 @@ namespace StabilityApp
 
         private void displayProblem()
         {
-            this.MathProblem.Text = mathProblems[problemNumber];    //displays the mathproblem/equation
+            this.MathProblem.Text = mathProblems[problemNumber];    //displays the mathproblem/equation, must be switched to a ID from the datbase
         }
 
         private void submit_Button_Click(object sender, RoutedEventArgs e)
         {
             userSolution = this.Solution.Text;
-            DateTime time_end = DateTime.Now;
-            TimeSpan difference = time_end.Subtract(timer);
+            time_end = DateTime.Now;
+            difference = time_end.Subtract(timer);
             time_stamp = difference.ToString("c");
             
             result = userSolution.Equals(mathSolutions[problemNumber]);
@@ -115,6 +118,15 @@ namespace StabilityApp
 
         private void continue_Button_Click(object sender, RoutedEventArgs e)
         {
+            time_end = DateTime.Now;
+            difference = time_end.Subtract(timer);
+            time_stamp = difference.ToString("c");
+
+            //this must be switched to input it into the correct id for the math problem
+            Math_Info newMathCalibrate = new Math_Info { solution_calibrate = time_stamp };
+            Math_Info_Items.Add(newMathCalibrate);
+            mathDB.Math_Information.InsertOnSubmit(newMathCalibrate);
+
             this.NavigationService.Navigate(new Uri("/CognitivTest.xaml?mode=calibrate", UriKind.Relative));
         }
 

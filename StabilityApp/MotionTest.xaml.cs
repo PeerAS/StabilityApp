@@ -21,6 +21,9 @@ namespace StabilityApp
         Accelerometer stabilityReading;
         Vector3 current_acceleration;
         DispatcherTimer timer;
+        float peakRotationX;
+        float peakRotationY;
+        float peakRotationZ;
         bool validData;
 
         public MotionTest()
@@ -28,6 +31,10 @@ namespace StabilityApp
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(30);
             timer.Tick += new EventHandler(timer_Tick);
+            peakRotationX = 0;
+            peakRotationY = 0;
+            peakRotationZ = 0;
+            
             InitializeComponent();
         }
 
@@ -63,6 +70,19 @@ namespace StabilityApp
                 this.Accelerometer_output.Text = "X: " + current_acceleration.X.ToString("0.00") +
                                                  "Y: " + current_acceleration.Y.ToString("0.00") + 
                                                  "Z: " + current_acceleration.Z.ToString("0.00");
+
+                if (current_acceleration.X > peakRotationX)
+                {
+                    peakRotationX = current_acceleration.X;
+                }
+                if (current_acceleration.Y > peakRotationY)
+                {
+                    peakRotationY = current_acceleration.Y;
+                }
+                if (current_acceleration.Z > peakRotationY)
+                {
+                    peakRotationZ = current_acceleration.Z;
+                }
             }
         }
       

@@ -243,4 +243,147 @@ namespace StabilityApp
     
     }
 
+    [Table]
+    public class Motion_Test_Info: INotifyPropertyChanged, INotifyPropertyChanging
+    {
+        private int _motionID;
+
+        [Column]
+        public int motionID
+        {
+            get
+            {
+                return _motionID;
+            }
+            set
+            {
+                if (_motionID != value)
+                {
+                    NotifyPropertyChanging("motionID");
+                    _motionID = value;
+                    NotifyPropertyChanged("motionID");
+                }
+            }
+        }
+
+        private float _calibratedX;
+
+        [Column]
+        public float calibratedX
+        {
+            get
+            {
+                return _calibratedX;
+            }
+            set
+            {
+                if (_calibratedX != value)
+                {
+                    NotifyPropertyChanging("calibratedX");
+                    _calibratedX = value;
+                    NotifyPropertyChanged("calibratedX");
+                }
+            }
+        }
+
+        private float _calibratedY;
+
+        [Column]
+        public float calibratedY
+        {
+            get
+            {
+                return _calibratedY;
+            }
+            set
+            {
+                if (_calibratedY != value)
+                {
+                    NotifyPropertyChanging("calibratedY");
+                    _calibratedY = value;
+                    NotifyPropertyChanged("calibratedY");
+                }
+            }
+        }
+
+        private float _calibratedZ;
+
+        [Column]
+        public float calibratedZ
+        {
+            get
+            {
+                return _calibratedZ;
+            }
+            set
+            {
+                if (_calibratedZ != value)
+                {
+                    NotifyPropertyChanging("calibratedZ");
+                    _calibratedZ = value;
+                    NotifyPropertyChanged("calibratedZ");
+                }
+            }
+        }
+
+        private string _solution_time;
+
+        [Column]
+        public string solution_time
+        {
+            get
+            {
+                return _solution_time;
+            }
+            set
+            {
+                if (_solution_time != value)
+                {
+                    NotifyPropertyChanging("solution_time");
+                    _solution_time = value;
+                    NotifyPropertyChanged("solution_time");
+                }
+            }
+        }
+
+        private string _calibrate_time;
+
+        [Column]
+        public string calibrate_time
+        {
+            get
+            {
+                return _calibrate_time;
+            }
+            set
+            {
+                if (_calibrate_time != value)
+                {
+                    NotifyPropertyChanging("calibrate_time");
+                    _calibrate_time = value;
+                    NotifyPropertyChanged("calibrate_time");
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        private void NotifyPropertyChanging(string propertyName)
+        {
+            if (PropertyChanging != null)
+            {
+                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+            }
+        }
+    }
 }

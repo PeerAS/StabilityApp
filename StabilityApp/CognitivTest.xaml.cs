@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data.Linq;
+using System.Data.Linq.Mapping;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -14,7 +18,7 @@ using System.Windows.Threading;
 
 namespace StabilityApp
 {
-    public partial class CognitivTest : PhoneApplicationPage
+    public partial class CognitivTest : PhoneApplicationPage, INotifyPropertyChanged
     {
         private int[] combination;
         private int[] user_input;
@@ -23,10 +27,14 @@ namespace StabilityApp
         private int _current_input;
         private const int MAX_INPUT = 4;
 
-
         private Random rand;
         DateTime timer;
         private TimeSpan time_start;
+
+        private DatabaseContext cognitiveDB;
+        private ObservableCollection<Cognitiv_Test_Info> _Cognitive_Info;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public CognitivTest()
         {
@@ -42,9 +50,11 @@ namespace StabilityApp
                 combination[i] = rand.Next(4) ;
             }
 
-                InitializeComponent();
+            InitializeComponent();
+            cognitiveDB = new DatabaseContext(DatabaseContext.Database_Connection);
+            this.DataContext = this;
 
-                this.Loaded += new RoutedEventHandler(CognitivTest_Loaded);
+            this.Loaded += new RoutedEventHandler(CognitivTest_Loaded);
         }
 
         void CognitivTest_Loaded(object sender, RoutedEventArgs e)
@@ -138,8 +148,14 @@ namespace StabilityApp
                 }
             }
 
+            
             if (mode.Equals("calibrate") && combination_error == true)
             {
+                Cognitiv_Test_Info newCognitiveInfo = new Cognitiv_Test_Info{cognitiv_calibrate = time_stamp,
+                                                                              cognitiv_time = time_stamp};
+                Cognitiv_Info_Items.Add(newCognitiveInfo);
+                cognitiveDB.Cognitiv_Test_Information.InsertOnSubmit(newCognitiveInfo);
+                
                 this.NavigationService.Navigate(new Uri("/MotionTest.xaml?mode=" + mode, UriKind.Relative));
             }
             else if (mode.Equals("calibrate") && combination_error == false)
@@ -152,21 +168,44 @@ namespace StabilityApp
             {
                 this.NavigationService.Navigate(new Uri("/ResultPage.xaml?mode=" + mode + "&result=" + combination_error, UriKind.Relative));
             }
-            //this will be moved to the next page
-            //if (combination_error)
-            //{
-            //    MessageBox.Show("Correct combination The timer is " + time_stamp);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Wrong combination");
-            //}
+          
         }
 
         void button_flash(Storyboard sb, TimeSpan begin)
         {   
             sb.BeginTime = begin;
             sb.Begin();
+        }
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            cognitiveDB.SubmitChanges();
+        }
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public ObservableCollection<Cognitiv_Test_Info> Cognitiv_Info_Items
+        {
+            get
+            {
+                return _Cognitive_Info;
+            }
+            set
+            {
+                if (_Cognitive_Info != value)
+                {
+                    _Cognitive_Info = value;
+                    NotifyPropertyChanged("Cognitiv_Info_Items");
+                }
+            }
+
         }
     }
 }
